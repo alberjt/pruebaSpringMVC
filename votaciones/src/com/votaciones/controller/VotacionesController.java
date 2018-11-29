@@ -19,31 +19,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.votaciones.model.Votacion;
  
-/*
- * author: Crunchify.com
- * 
- */
- 
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VotacionesController {
  
 	//@Autowired
-    //private UserService userService;
+    //private VotacionesService votacionesService;
 	
 	 @PostMapping
 	 @RequestMapping("/votaciones")
-	 public ResponseEntity<?> saveUser(@RequestBody Votacion user){
+	 public ResponseEntity<?> saveUser(@RequestBody Votacion votacion){
         System.out.println("hola que tal?");
         return null;
-		//return new ApiResponse<>(HttpStatus.OK.value(), "User saved successfully.",userService.save(user));
+		//return new ApiResponse<>(HttpStatus.OK.value(), "Votacion saved successfully.",votacionesService.save(votacion));
 	 }
 	
 	 @RequestMapping("/welcome")
 	public ModelAndView helloWorld() throws SQLException {
  
 		String message = "<br><div style='text-align:center;'>"
-				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
+				+ "<h3>********** Hello World, Spring MVC **********</div><br><br>";
 		
 		
 		DataSource ds = null;  
