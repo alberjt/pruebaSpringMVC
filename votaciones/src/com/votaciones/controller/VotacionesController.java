@@ -28,8 +28,8 @@ public class VotacionesController {
     //private VotacionesService votacionesService;
 	
 	 @PostMapping
-	 @RequestMapping("/votaciones")
-	 public ResponseEntity<?> saveUser(@RequestBody Votacion votacion){
+	 @RequestMapping("/saveVotacion")
+	 public ResponseEntity<?> saveVotacion(@RequestBody Votacion votacion){
         System.out.println("hola que tal?");
         return null;
 		//return new ApiResponse<>(HttpStatus.OK.value(), "Votacion saved successfully.",votacionesService.save(votacion));
