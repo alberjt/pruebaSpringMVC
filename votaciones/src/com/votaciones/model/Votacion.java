@@ -1,15 +1,37 @@
 package com.votaciones.model;
 
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
+
+@Entity
+@Table(name="votaciones")
 public class Votacion {
 	
-	private int id;
-	private String enlace;
-	private int numVotos;
+	@Id
+	@Column(name = "id", columnDefinition = "uuid")
+	@Type(type = "org.hibernate.type.PostgresUUIDType")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@GeneratedValue(generator = "uuid2")
+	private UUID id;
 	
-	public int getId() {
+	@Column(name="enlace")
+	private String enlace;
+	@Column(name="numero")
+	private int numero;
+	
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public String getEnlace() {
@@ -18,10 +40,10 @@ public class Votacion {
 	public void setEnlace(String enlace) {
 		this.enlace = enlace;
 	}
-	public int getNumVotos() {
-		return numVotos;
+	public int getNumero() {
+		return numero;
 	}
-	public void setNumVotos(int numVotos) {
-		this.numVotos = numVotos;
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
 }

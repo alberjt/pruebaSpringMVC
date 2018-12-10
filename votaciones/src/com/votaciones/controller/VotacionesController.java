@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.annotation.Resource;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
@@ -17,28 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.votaciones.model.Votacion;
- 
+import com.votaciones.services.VotacionesService; 
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VotacionesController {
  
-	//@Autowired
-    //private VotacionesService votacionesService;
+	@Resource
+    private VotacionesService votacionesService;
 	
 	 @PostMapping
 	 @RequestMapping("/saveVotacion")
 	 public ResponseEntity<?> saveVotacion(@RequestBody Votacion votacion){
-        System.out.println("hola que tal?");
-        return null;
-		//return new ApiResponse<>(HttpStatus.OK.value(), "Votacion saved successfully.",votacionesService.save(votacion));  
+		 return new ResponseEntity<String>(votacionesService.add(votacion));
 	 }
 	
 	 @RequestMapping("/welcome")
 	public ModelAndView helloWorld() throws SQLException {
  
 		String message = "<br><div style='text-align:center;'>"
-				+ "<h3>********** Hello World, Spring MVC **********</div><br><br>";
+				+ "<h3>********** Hola y tal, Spring MVC **********</div><br><br>";
 		
 		
 		DataSource ds = null;  

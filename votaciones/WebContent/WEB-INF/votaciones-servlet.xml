@@ -13,8 +13,9 @@
  
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.votaciones.controller" />
+	<context:component-scan base-package="com.votaciones.services"/>
 	<mvc:default-servlet-handler />
- 
+ 	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
