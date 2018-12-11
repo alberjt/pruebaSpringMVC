@@ -37,7 +37,7 @@ public class VotacionesController {
 	public ModelAndView helloWorld() throws SQLException {
  
 		String message = "<br><div style='text-align:center;'>"
-				+ "<h3>********** Hola y tal, Spring MVC **********</div><br><br>";
+				+ "<h3>********** Hola y tal, a Spring MVC **********</div><br><br>";
 		
 		
 		DataSource ds = null;  
