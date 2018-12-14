@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-
 @Entity
 @Table(name="votaciones")
 public class Votacion {
@@ -27,6 +26,8 @@ public class Votacion {
 	private String enlace;
 	@Column(name="numero")
 	private int numero;
+	@Column(name="titulo")
+	private String titulo;
 	
 	public UUID getId() {
 		return id;
@@ -46,4 +47,12 @@ public class Votacion {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	
+	
 }

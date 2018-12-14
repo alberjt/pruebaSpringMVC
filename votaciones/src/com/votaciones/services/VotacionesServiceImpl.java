@@ -1,5 +1,7 @@
 package com.votaciones.services;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -14,20 +16,35 @@ import com.votaciones.model.Votacion;
 @Service
 public class VotacionesServiceImpl implements VotacionesService{
 	
-	public HttpStatus add(Votacion votacion) {
+	private static SessionFactory factory;
+	
+	public VotacionesServiceImpl() {
 		StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml")
 				.build();
 		Metadata metaData = new MetadataSources(standardRegistry).getMetadataBuilder().build();
-		SessionFactory sessionFactory = metaData.getSessionFactoryBuilder().build();
+		factory = metaData.getSessionFactoryBuilder().build();
 
-		Session session = sessionFactory.openSession();
+	}
+	
+	public HttpStatus add(Votacion votacion) {
+		Session session = factory.openSession();
 		session.beginTransaction();
 		
 		session.save(votacion);
 		session.getTransaction().commit();
 		
 		session.close(); 
-		sessionFactory.close();
 		return HttpStatus.OK;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Votacion> getAll() {
+		
+		Session session = factory.openSession();
+		List<Votacion> votaciones = (List<Votacion>) session.createQuery("FROM Votacion").list();
+		
+		session.close(); 
+		
+		return votaciones;
 	}
 }
