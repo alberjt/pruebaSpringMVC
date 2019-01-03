@@ -41,6 +41,12 @@ public class VotacionesController {
 	 public ResponseEntity<List<Votacion>> getVotaciones(){
 		 return new ResponseEntity<List<Votacion>>(votacionesService.getAll(), HttpStatus.OK);
 	 }
+	 
+	 @PostMapping
+	 @RequestMapping("/actualizar")
+	 public ResponseEntity<String> actualizar(@RequestBody Votacion votacion){
+		 return new ResponseEntity<String>(votacionesService.update(votacion));
+	 }
 	
 	 @RequestMapping("/welcome")
 	public ModelAndView helloWorld() throws SQLException {

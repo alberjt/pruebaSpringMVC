@@ -47,4 +47,17 @@ public class VotacionesServiceImpl implements VotacionesService{
 		
 		return votaciones;
 	}
+	
+	
+	public HttpStatus update(Votacion votacion) {
+		
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.update(votacion);
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return HttpStatus.OK;
+	}
 }

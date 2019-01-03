@@ -12,4 +12,6 @@ public interface VotacionesService {
 
 	List<Votacion> getAll();
 
+	HttpStatus update(Votacion votacion);
+
 }
