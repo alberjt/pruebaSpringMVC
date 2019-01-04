@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.votaciones.model.Reclamacion;
 import com.votaciones.services.ReclamacionesService;
@@ -25,16 +24,16 @@ public class ReclamacionesController {
 	
 	@Resource
 	private ReclamacionesService reclamacionesService;
+
 	
-	@PostMapping
-	@RequestMapping("/saveReclamacion")
-	public ResponseEntity<String> saveVotacion(@RequestBody Reclamacion reclamacion){
+	@PostMapping("/saveReclamacion")
+	public String saveVotacion(@RequestParam("file") MultipartFile file, 
+			@RequestParam("reclamacion") String reclamacion){
 		return null;
-	}
+	}	
 
 	@PostMapping("/pruebaFichero")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file, 
-			RedirectAttributes redirectAttributes) {
+	public String handleFileUpload(@RequestParam("file") MultipartFile file) {
 		 
 		try {
 			Files.copy(file.getInputStream(), Paths.get("C:\\Iberdrola").resolve(file.getOriginalFilename()));
