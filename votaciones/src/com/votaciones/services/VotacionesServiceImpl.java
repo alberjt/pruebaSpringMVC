@@ -37,6 +37,17 @@ public class VotacionesServiceImpl implements VotacionesService{
 		return HttpStatus.OK;
 	}
 	
+	public HttpStatus delete(Votacion votacion) {
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.delete(votacion);
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return HttpStatus.OK;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Votacion> getAll() {
 		
@@ -46,5 +57,18 @@ public class VotacionesServiceImpl implements VotacionesService{
 		session.close(); 
 		
 		return votaciones;
+	}
+	
+	
+	public HttpStatus update(Votacion votacion) {
+		
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.update(votacion);
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return HttpStatus.OK;
 	}
 }

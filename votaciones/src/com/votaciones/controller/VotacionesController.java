@@ -36,10 +36,22 @@ public class VotacionesController {
 		 return new ResponseEntity<String>(votacionesService.add(votacion));
 	 }
 	 
+	 @PostMapping
+	 @RequestMapping("/deleteVotacion")
+	 public ResponseEntity<String> deleteVotacion(@RequestBody Votacion votacion){
+		 return new ResponseEntity<String>(votacionesService.delete(votacion));
+	 }
+	 
 	 @GetMapping
 	 @RequestMapping("/obtenerVotaciones")
 	 public ResponseEntity<List<Votacion>> getVotaciones(){
 		 return new ResponseEntity<List<Votacion>>(votacionesService.getAll(), HttpStatus.OK);
+	 }
+	 
+	 @PostMapping
+	 @RequestMapping("/actualizar")
+	 public ResponseEntity<String> actualizar(@RequestBody Votacion votacion){
+		 return new ResponseEntity<String>(votacionesService.update(votacion));
 	 }
 	
 	 @RequestMapping("/welcome")
