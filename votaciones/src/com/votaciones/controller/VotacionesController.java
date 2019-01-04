@@ -32,8 +32,8 @@ public class VotacionesController {
 	
 	 @PostMapping
 	 @RequestMapping("/saveVotacion")
-	 public ResponseEntity<String> saveVotacion(@RequestBody Votacion votacion){
-		 return new ResponseEntity<String>(votacionesService.add(votacion));
+	 public ResponseEntity<Votacion>  saveVotacion(@RequestBody Votacion votacion){
+		 return new ResponseEntity<Votacion>(votacionesService.add(votacion), HttpStatus.OK);
 	 }
 	 
 	 @GetMapping

@@ -26,7 +26,7 @@ public class VotacionesServiceImpl implements VotacionesService{
 
 	}
 	
-	public HttpStatus add(Votacion votacion) {
+	public Votacion add(Votacion votacion) {
 		Session session = factory.openSession();
 		session.beginTransaction();
 		
@@ -34,7 +34,7 @@ public class VotacionesServiceImpl implements VotacionesService{
 		session.getTransaction().commit();
 		
 		session.close(); 
-		return HttpStatus.OK;
+		return votacion;
 	}
 	
 	@SuppressWarnings("unchecked")
