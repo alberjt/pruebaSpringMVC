@@ -9,6 +9,8 @@ import com.votaciones.model.Votacion;
 public interface VotacionesService {
 
 	Votacion add(Votacion votacion);
+	
+	HttpStatus delete(Votacion votacion);
 
 	List<Votacion> getAll();
 
