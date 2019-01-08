@@ -26,11 +26,22 @@ public class VotacionesServiceImpl implements VotacionesService{
 
 	}
 	
-	public HttpStatus add(Votacion votacion) {
+	public Votacion add(Votacion votacion) {
 		Session session = factory.openSession();
 		session.beginTransaction();
 		
 		session.save(votacion);
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return votacion;
+	}
+	
+	public HttpStatus delete(Votacion votacion) {
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.delete(votacion);
 		session.getTransaction().commit();
 		
 		session.close(); 
