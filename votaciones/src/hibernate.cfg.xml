@@ -11,6 +11,7 @@
 		<property name="hibernate.show_sql">true</property>
 
 		<mapping class="com.votaciones.model.Votacion" />
+		<mapping class="com.votaciones.model.Reclamacion" />
 
 	</session-factory>
 </hibernate-configuration>
