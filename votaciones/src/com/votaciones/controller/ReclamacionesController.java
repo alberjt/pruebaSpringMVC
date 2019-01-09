@@ -31,7 +31,7 @@ public class ReclamacionesController {
 
 	
 	@PostMapping("/saveReclamacion")
-	public ResponseEntity<String> saveVotacion(@RequestParam(value = "file", required = false) MultipartFile file, 
+	public ResponseEntity<String> saveReclamacion(@RequestParam(value = "file", required = false) MultipartFile file, 
 			@RequestParam("reclamacion") String reclamacionParam) throws IOException{
 		ObjectMapper objectMapper = new ObjectMapper();
 		Reclamacion reclamacion = null;
