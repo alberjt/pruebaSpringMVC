@@ -1,6 +1,7 @@
 package com.votaciones.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 
@@ -8,11 +9,13 @@ import com.votaciones.model.Votacion;
 
 public interface VotacionesService {
 
-	HttpStatus add(Votacion votacion);
+	Votacion add(Votacion votacion);
 	
-	HttpStatus delete(Votacion votacion);
+	UUID delete(Votacion votacion);
 
 	List<Votacion> getAll();
+	
+	Votacion get(UUID id);
 
 	HttpStatus update(Votacion votacion);
 
