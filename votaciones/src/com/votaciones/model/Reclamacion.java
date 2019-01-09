@@ -2,14 +2,17 @@ package com.votaciones.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="reclamaciones")
+@Table(name="reclamacion")
 public class Reclamacion {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column
@@ -22,7 +25,10 @@ public class Reclamacion {
 	private String email;
 	
 	@Column
-	private String texto;
+	private String comentario;
+	
+	@Column
+	private String fichero;
 
 	public Integer getId() {
 		return id;
@@ -56,12 +62,20 @@ public class Reclamacion {
 		this.email = email;
 	}
 
-	public String getTexto() {
-		return texto;
+	public String getComentario() {
+		return comentario;
 	}
 
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public String getFichero() {
+		return fichero;
+	}
+
+	public void setFichero(String fichero) {
+		this.fichero = fichero;
 	}
 
 }
