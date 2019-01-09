@@ -2,6 +2,7 @@ package com.votaciones.services;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -26,8 +27,14 @@ public class ReclamacionesServiceImpl implements ReclamacionesService {
 
 	@Override
 	public HttpStatus add(Reclamacion reclamacion) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.save(reclamacion);
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return HttpStatus.OK;
 	}
 
 	@Override
