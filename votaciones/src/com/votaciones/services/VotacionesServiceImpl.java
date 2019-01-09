@@ -1,6 +1,7 @@
 package com.votaciones.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,7 +38,7 @@ public class VotacionesServiceImpl implements VotacionesService{
 		return votacion;
 	}
 	
-	public HttpStatus delete(Votacion votacion) {
+	public UUID delete(Votacion votacion) {
 		Session session = factory.openSession();
 		session.beginTransaction();
 		
@@ -45,7 +46,7 @@ public class VotacionesServiceImpl implements VotacionesService{
 		session.getTransaction().commit();
 		
 		session.close(); 
-		return HttpStatus.OK;
+		return votacion.getId();
 	}
 	
 	@SuppressWarnings("unchecked")
