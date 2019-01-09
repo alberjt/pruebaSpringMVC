@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.naming.InitialContext;
@@ -38,8 +39,8 @@ public class VotacionesController {
 	 
 	 @PostMapping
 	 @RequestMapping("/deleteVotacion")
-	 public ResponseEntity<String> deleteVotacion(@RequestBody Votacion votacion){
-		 return new ResponseEntity<String>(votacionesService.delete(votacion));
+	 public ResponseEntity<UUID> deleteVotacion(@RequestBody Votacion votacion){
+		 return new ResponseEntity<UUID>(votacionesService.delete(votacion), HttpStatus.OK);
 	 }
 	 
 	 @GetMapping
