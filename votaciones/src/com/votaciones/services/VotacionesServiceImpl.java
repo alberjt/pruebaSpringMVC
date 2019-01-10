@@ -60,17 +60,6 @@ public class VotacionesServiceImpl implements VotacionesService{
 		return votaciones;
 	}
 	
-	public Votacion get(UUID id) {
-		
-		Session session = factory.openSession();
-		Votacion votacion = (Votacion) session.get(Votacion.class, id);
-		
-		session.close(); 
-		
-		return votacion;
-	}
-	
-	
 	public HttpStatus update(Votacion votacion) {
 		
 		Session session = factory.openSession();

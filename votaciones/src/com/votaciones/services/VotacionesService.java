@@ -15,8 +15,6 @@ public interface VotacionesService {
 
 	List<Votacion> getAll();
 	
-	Votacion get(UUID id);
-
 	HttpStatus update(Votacion votacion);
 
 }
