@@ -13,7 +13,7 @@
  
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.votaciones.controller" />
-	<context:component-scan base-package="com.votaciones.services"/>
+	<context:component-scan base-package="com.çvotaciones.services"/>
 	<mvc:default-servlet-handler />
  	
 	<bean id="viewResolver"

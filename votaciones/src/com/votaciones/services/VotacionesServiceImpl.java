@@ -60,7 +60,6 @@ public class VotacionesServiceImpl implements VotacionesService{
 		return votaciones;
 	}
 	
-	
 	public HttpStatus update(Votacion votacion) {
 		
 		Session session = factory.openSession();
