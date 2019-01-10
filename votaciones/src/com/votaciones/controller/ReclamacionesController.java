@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class ReclamacionesController {
 
 	
 	@PostMapping("/saveReclamacion")
-	public ResponseEntity<String> saveReclamacion(@RequestParam(value = "file", required = false) MultipartFile file, 
+	public ResponseEntity<Reclamacion> saveReclamacion(@RequestParam(value = "file", required = false) MultipartFile file, 
 			@RequestParam("reclamacion") String reclamacionParam) throws IOException{
 		ObjectMapper objectMapper = new ObjectMapper();
 		Reclamacion reclamacion = null;
@@ -50,7 +51,7 @@ public class ReclamacionesController {
 			reclamacion.setFichero(nombreFichero);
 		}
 		
-		return new ResponseEntity<String>(reclamacionesService.add(reclamacion));
+		return new ResponseEntity<Reclamacion>(reclamacionesService.add(reclamacion), HttpStatus.OK);
 	}
 
 }

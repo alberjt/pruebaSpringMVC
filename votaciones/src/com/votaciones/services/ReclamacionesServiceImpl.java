@@ -8,7 +8,6 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.votaciones.model.Reclamacion;
@@ -26,7 +25,7 @@ public class ReclamacionesServiceImpl implements ReclamacionesService {
 	}
 
 	@Override
-	public HttpStatus add(Reclamacion reclamacion) {
+	public Reclamacion add(Reclamacion reclamacion) {
 		Session session = factory.openSession();
 		session.beginTransaction();
 		
@@ -34,7 +33,7 @@ public class ReclamacionesServiceImpl implements ReclamacionesService {
 		session.getTransaction().commit();
 		
 		session.close(); 
-		return HttpStatus.OK;
+		return reclamacion;
 	}
 
 	@Override
