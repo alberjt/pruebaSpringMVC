@@ -14,7 +14,7 @@ public interface VotacionesService {
 	UUID delete(Votacion votacion);
 
 	List<Votacion> getAll();
-
+	
 	HttpStatus update(Votacion votacion);
 
 }
