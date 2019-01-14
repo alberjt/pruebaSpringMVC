@@ -2,6 +2,9 @@ package com.votaciones.services;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -37,9 +40,30 @@ public class ReclamacionesServiceImpl implements ReclamacionesService {
 	}
 
 	@Override
+	public Reclamacion get(Integer id) {
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		Reclamacion reclamacion =  (Reclamacion) session.get(Reclamacion.class, id);
+		
+		session.getTransaction().commit();
+		
+		session.close(); 
+		return reclamacion;
+	}
+
+	@Override
 	public List<Reclamacion> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Session session = factory.openSession();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Reclamacion> criteria = builder.createQuery(Reclamacion.class);
+		criteria.from(Reclamacion.class);
+				
+		List<Reclamacion> reclamaciones = session.createQuery(criteria).getResultList();
+		
+		session.close(); 
+		return reclamaciones;
 	}
 
 }
