@@ -68,7 +68,7 @@ public class ReclamacionesController {
 			reclamacion.setFichero(nombreFichero);
 			
 			//Guardamos el adjunto en elasticsearch
-			elasticsearchService.saveReclamacionAttachment(reclamacion.getId(), file);
+			//elasticsearchService.saveReclamacionAttachment(reclamacion.getId(), file);
 			
 		}
 		
