@@ -67,12 +67,16 @@ public class ReclamacionesController {
 			Files.copy(file.getInputStream(), Paths.get(PATH).resolve(nombreFichero));
 			reclamacion.setFichero(nombreFichero);
 			
-			//Guardamos el adjunto en elasticsearch
-			//elasticsearchService.saveReclamacionAttachment(reclamacion.getId(), file);
-			
 		}
 		
-		return new ResponseEntity<Reclamacion>(reclamacionesService.add(reclamacion), HttpStatus.OK);
+		Reclamacion newReclamacion = reclamacionesService.add(reclamacion);
+				
+		//Guardamos el adjunto en elasticsearch
+		if (file != null) {
+			elasticsearchService.saveReclamacionAttachment(newReclamacion.getId(), file, nombreFichero);
+		}
+		
+		return new ResponseEntity<Reclamacion>(newReclamacion, HttpStatus.OK);
 	}
 	
 	@GetMapping

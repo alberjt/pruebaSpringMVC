@@ -87,8 +87,9 @@ public class ElasticsearchService {
 		}
      * @param reclamacionId
      * @param file
+     * @param fileName
      */
-	public static void saveReclamacionAttachment(Integer reclamacionId, MultipartFile file){
+	public void saveReclamacionAttachment(Integer reclamacionId, MultipartFile file, String fileName){
 		
 		
 	    Map<String, Object> jsonMap ;
@@ -102,14 +103,11 @@ public class ElasticsearchService {
             e.printStackTrace();
         }
 	    jsonMap = new HashMap<String, Object>();
-	    jsonMap.put("id", 1);
+	    jsonMap.put("id", reclamacionId);
 	    jsonMap.put("data", encodedfile); // inserting null here when file is not available and it is not able to encoded.
-	    jsonMap.put("name", file.getName());
-	
-	    String id=Long.toString(1);
+	    jsonMap.put("name", fileName);
 	    
-	    
-	    IndexRequest request = new IndexRequest(ATTACHMENT, "doc", id )
+	    IndexRequest request = new IndexRequest(ATTACHMENT, "test_type", Long.toString(reclamacionId))
 	            .source(jsonMap)
 	            .setPipeline(ATTACHMENT);
 
@@ -120,18 +118,19 @@ public class ElasticsearchService {
 			e.printStackTrace();
 		}
 
-
+/*
         try {
 			restClient.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	    logger.info("Indexing done.....");
 	
 	}
 	
 	public List<Reclamacion> searchInReclamacionesAttachment(String texto){
+		
 		
 		List<Reclamacion> reclamaciones = new ArrayList<Reclamacion>();
 		
