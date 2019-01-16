@@ -1,8 +1,11 @@
 package com.votaciones.services;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -23,8 +27,14 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.votaciones.model.Reclamacion;
 
 @Service
 public class ElasticsearchService { 
@@ -94,6 +104,7 @@ public class ElasticsearchService {
 	    jsonMap = new HashMap<String, Object>();
 	    jsonMap.put("id", 1);
 	    jsonMap.put("data", encodedfile); // inserting null here when file is not available and it is not able to encoded.
+	    jsonMap.put("name", file.getName());
 	
 	    String id=Long.toString(1);
 	    
@@ -120,11 +131,12 @@ public class ElasticsearchService {
 	
 	}
 	
-	public void searchInReclamacionesAttachment(String texto){
+	public List<Reclamacion> searchInReclamacionesAttachment(String texto){
+		
+		List<Reclamacion> reclamaciones = new ArrayList<Reclamacion>();
 		
 		SearchRequest contentSearchRequest = new SearchRequest(ATTACHMENT); 
 	    SearchSourceBuilder contentSearchSourceBuilder = new SearchSourceBuilder();
-	    //contentSearchRequest.types(TYPE);
 	    QueryStringQueryBuilder attachmentQB = new QueryStringQueryBuilder(texto); 
 	    attachmentQB.defaultField("attachment.content");
 	    contentSearchSourceBuilder.query(attachmentQB);
@@ -137,32 +149,32 @@ public class ElasticsearchService {
 	    } catch (IOException e) {
 	        e.getLocalizedMessage();
 	    }
-	    System.out.println("Request --->"+contentSearchRequest.toString());
-	    System.out.println("Response --->"+contentSearchResponse.toString());
-
-	    long contenttotalHits=contentSearchResponse.getHits().totalHits;
-	    System.out.println("condition Total Hits --->"+contenttotalHits);
 
 	    JSONArray hitsArray;
 	    JSONObject json = new JSONObject(contentSearchResponse);
 		JSONObject hits = json.getJSONObject("hits");
 		hitsArray = hits.getJSONArray("hits");
+		JSONObject h;
+		JSONObject sourceJObj;
+		Reclamacion reclamacion;
+		String id;
+		//String data;
+		String nombre;
 		for (int i=0; i<hitsArray.length(); i++) {
-			JSONObject h = hitsArray.getJSONObject(i);
-			JSONObject sourceJObj = h.getJSONObject("sourceAsMap");
-			String data = (String)sourceJObj.get("data");
-			byte[] decodedStr = Base64.getDecoder().decode( data );
+			h = hitsArray.getJSONObject(i);
 			
-			FileOutputStream fos;
-			try {
-				fos = new FileOutputStream("prueba.txt");
-				fos.write(Base64.getDecoder().decode(new String( decodedStr, "utf-8" )));
-				fos.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sourceJObj = h.getJSONObject("sourceAsMap");
+			nombre = (String)sourceJObj.get("name");
+			id = (String) h.get("id");
+			
+			reclamacion = new Reclamacion();
+			reclamacion.setId(Integer.valueOf(id));
+			reclamacion.setFichero(nombre);
+			
+			reclamaciones.add(reclamacion);
 		}
+		
+		return reclamaciones;
 	}
 	
 }

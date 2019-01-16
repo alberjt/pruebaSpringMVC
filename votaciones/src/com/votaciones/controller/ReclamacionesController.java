@@ -75,16 +75,15 @@ public class ReclamacionesController {
 		return new ResponseEntity<Reclamacion>(reclamacionesService.add(reclamacion), HttpStatus.OK);
 	}
 	
-	@PostMapping
+	@GetMapping
 	@RequestMapping("/searchInReclamacionesAttachment")
-	public ResponseEntity<InputStreamResource> searchInReclamacionesAttachment(@RequestBody String textoBusqueda){
+	public ResponseEntity<List<Reclamacion>>  searchInAttachment(@RequestParam String textoBusqueda){
 		
-		elasticsearchService.searchInReclamacionesAttachment("textoBusqueda");
-		return null;
+		return new ResponseEntity<List<Reclamacion>>(elasticsearchService.searchInReclamacionesAttachment(textoBusqueda), HttpStatus.OK);
 	}
 	
 	@GetMapping
-	@RequestMapping("/obtenerReclamacion")
+	@RequestMapping("/obtenerReclamaciones")
 	public ResponseEntity<List<Reclamacion>> getReclamaciones() {
 		return new ResponseEntity<List<Reclamacion>>(reclamacionesService.getAll(), HttpStatus.OK);
 	}
@@ -101,7 +100,7 @@ public class ReclamacionesController {
 				+ FilenameUtils.getExtension(reclamacion.getFichero());
 		 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=" + nombre)
-	            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+	            .contentLength(file.length())
 	            .body(resource);
 	}
 
