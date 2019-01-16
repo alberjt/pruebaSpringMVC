@@ -59,7 +59,7 @@ public class ReclamacionesController {
 			}
 			
 			nombreFichero = new String (
-					FilenameUtils.getName(
+					FilenameUtils.getBaseName(
 							new String(file.getOriginalFilename()
 									.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8)))
 					+ "_" + RandomStringUtils.random(4, true, false)
@@ -99,7 +99,7 @@ public class ReclamacionesController {
 		File file = new File(Paths.get(PATH).resolve(reclamacion.getFichero()).toUri());
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-		String nombreBbDd = FilenameUtils.getName(reclamacion.getFichero());
+		String nombreBbDd = FilenameUtils.getBaseName(reclamacion.getFichero());
 		String nombre = nombreBbDd.substring(0, nombreBbDd.length() - 5) + "." 
 				+ FilenameUtils.getExtension(reclamacion.getFichero());
 		 
