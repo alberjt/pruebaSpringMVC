@@ -71,7 +71,7 @@ public class ReclamacionesController {
 				
 		//Guardamos el adjunto en elasticsearch
 		if (file != null) {
-			elasticsearchService.saveReclamacionAttachment(newReclamacion.getId(), file, nombreFichero);
+			elasticsearchService.saveReclamacionAttachment(newReclamacion, file, nombreFichero);
 		}
 		
 		return new ResponseEntity<Reclamacion>(newReclamacion, HttpStatus.OK);

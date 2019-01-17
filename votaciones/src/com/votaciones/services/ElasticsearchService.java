@@ -1,11 +1,6 @@
 package com.votaciones.services;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -13,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -23,14 +17,9 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,11 +74,11 @@ public class ElasticsearchService {
 		 ]
 		
 		}
-     * @param reclamacionId
+     * @param reclamacion
      * @param file
      * @param fileName
      */
-	public void saveReclamacionAttachment(Integer reclamacionId, MultipartFile file, String fileName){
+	public void saveReclamacionAttachment(Reclamacion reclamacion, MultipartFile file, String fileName){
 		
 		
 	    Map<String, Object> jsonMap ;
@@ -103,11 +92,14 @@ public class ElasticsearchService {
             e.printStackTrace();
         }
 	    jsonMap = new HashMap<String, Object>();
-	    jsonMap.put("id", reclamacionId);
+	    jsonMap.put("id", reclamacion.getId());
 	    jsonMap.put("data", encodedfile); // inserting null here when file is not available and it is not able to encoded.
-	    jsonMap.put("name", fileName);
+	    jsonMap.put("filename", fileName); // inserting null here when file is not available and it is not able to encoded.
+	    jsonMap.put("nombre", reclamacion.getNombre()); 
+	    jsonMap.put("telefono", reclamacion.getTelefono());
+	    jsonMap.put("email", reclamacion.getEmail());
 	    
-	    IndexRequest request = new IndexRequest(ATTACHMENT, "test_type", Long.toString(reclamacionId))
+	    IndexRequest request = new IndexRequest(ATTACHMENT, "test_type", Long.toString(reclamacion.getId()))
 	            .source(jsonMap)
 	            .setPipeline(ATTACHMENT);
 
@@ -157,18 +149,28 @@ public class ElasticsearchService {
 		JSONObject sourceJObj;
 		Reclamacion reclamacion;
 		String id;
-		//String data;
 		String nombre;
+		String telefono;
+		String email;
+		String fileName;
+		
 		for (int i=0; i<hitsArray.length(); i++) {
 			h = hitsArray.getJSONObject(i);
 			
 			sourceJObj = h.getJSONObject("sourceAsMap");
-			nombre = (String)sourceJObj.get("name");
+			
+			fileName = (String)sourceJObj.get("filename");
 			id = (String) h.get("id");
+			nombre = (String) sourceJObj.get("nombre");
+			telefono = (String) sourceJObj.get("telefono");
+			email = (String) sourceJObj.get("email");
 			
 			reclamacion = new Reclamacion();
 			reclamacion.setId(Integer.valueOf(id));
-			reclamacion.setFichero(nombre);
+			reclamacion.setFichero(fileName);
+			reclamacion.setNombre(nombre);
+			reclamacion.setEmail(email);
+			reclamacion.setTelefono(telefono);
 			
 			reclamaciones.add(reclamacion);
 		}
